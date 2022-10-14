@@ -22,8 +22,14 @@ handles = []
 #Recieves message from clients
 def recieveMsg(user):
     while True:
-        msg = user.recv(1024) #1024 specifies buffer size
-        distributeMsg(msg)
+
+        msg = msg.recv(1024) #1024 specifies buffer size
+        if "REQUESTFILE:" in msg.decode('ascii'):
+            distributeMsg("DISTRIBUTINGEFILE:{}".format(msg[msg.index(':'):]).decode('ascii'))
+            
+        else:
+            distributeMsg(msg)
+
 
 #Sends the message to each user in chat room
 def distributeMsg(msg):
@@ -56,6 +62,7 @@ def receiveUsers():
         thread.start()
 
 print("Staring chat room")
+
 print("details: ", chatRoom.getsockname())
 
 receiveUsers()
