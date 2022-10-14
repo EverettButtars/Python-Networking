@@ -56,6 +56,8 @@ def receiveUsers():
         thread.start()
 
 print("Staring chat room")
+print("details: ", chatRoom.getsockname())
+
 receiveUsers()
    
 

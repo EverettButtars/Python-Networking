@@ -1,12 +1,13 @@
 import socket
 import threading
 
-#get clients handle
+#get clients handle and port
 handle = input("Enter you handle: ")
+port = int(input('port: '))
 
-#IP and port
+#IP and port     
 ip = '127.0.0.1'
-port = 0
+
 
 #create socket and connect
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
