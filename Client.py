@@ -3,9 +3,9 @@ import threading
 
 #get clients handle and port
 handle = input("Enter you handle: ")
-port = int(input("Enter the port: "))
+port = int(input('port: '))
 
-#IP and port
+#IP and port     
 ip = '127.0.0.1'
 
 #create socket and connect
@@ -32,8 +32,9 @@ def receiveMsg(t):
         #check if message is code word to introduce yourself
         if message == 'HANDLE':
             server.send(handle.encode('ascii'))
-        else:
+        elif len(message) > 0: 
             print(message)
+      
 
 def sendMsg(t):
     while True:
@@ -47,7 +48,7 @@ def sendMsg(t):
             
         else: 
             fmsg = '{}: {}'.format(handle, msg )
-            server.send(msg.encode('ascii'))
+            server.send(fmsg.encode('ascii'))
 
 
 fileEvent = threading.event()
