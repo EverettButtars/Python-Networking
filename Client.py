@@ -21,7 +21,7 @@ def receiveMsg():
         #check if message is code word to introduce yourself
         if message == 'HANDLE':
             server.send(handle.encode('ascii'))
-        else:
+        elif len(message) > 0: 
             print(message)
 
 def sendMsg():

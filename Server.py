@@ -20,9 +20,9 @@ users = []
 handles = []
 
 #Recieves message from clients
-def recieveMsg(msg):
+def recieveMsg(user):
     while True:
-        msg = msg.recv(1024) #1024 specifies buffer size
+        msg = user.recv(1024) #1024 specifies buffer size
         distributeMsg(msg)
 
 #Sends the message to each user in chat room
@@ -36,7 +36,7 @@ def receiveUsers():
     #accept users
     while True:
         #accept a new user
-        user = chatRoom.accept()
+        user, addy = chatRoom.accept()
 
         #ask for their chat handle
         user.send('HANDLE'.encode('ascii'))
@@ -52,7 +52,7 @@ def receiveUsers():
         print("user {} has Joined!".format(handle))
 
         #creates a thread for distributeMsg to run
-        thread = threading.Thread(target=distributeMsg, args=(user, ))
+        thread = threading.Thread(target=recieveMsg, args=(user, ))
         thread.start()
 
 print("Staring chat room")
