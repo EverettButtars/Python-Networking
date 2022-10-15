@@ -1,6 +1,7 @@
 import socket #Pythons built in networking
 import threading #Used to keep recieveMsg and receiveUsers active at the same time
-
+import os
+import time
 
 #Create global variables
 
@@ -23,19 +24,41 @@ handles = []
 def recieveMsg(user):
     while True:
 
-        msg = msg.recv(1024) #1024 specifies buffer size
-        if "REQUESTFILE:" in msg.decode('ascii'):
-            distributeMsg("DISTRIBUTINGEFILE:{}".format(msg[msg.index(':'):]).decode('ascii'))
+        msg = user.recv(1024).decode('ascii') #1024 specifies buffer size
+
+        #checks if recieved file request
+        if "REQUESTFILE:" in msg:
+            #obtains file name from request
+            fileName = msg[(msg.index(':')+1):]
+
+            #lets everyone know they are recieving a file
+            distributeMsg("DISTRIBUTINGEFILE:{}".format(fileName).encode('ascii'))
+
+            #opens and reads file and sends it via distrubuteMsg
+            file = open(fileName, 'rb')
+            print("Opened")
+            distributeMsg(str(int(os.path.getsize(fileName))).encode())
+            time.sleep(.1)
+            data = file.read(1024)
+            print("Reading")
+            while(data):
+                distributeMsg(data)
+                data = file.read(1024)
             
+            
+            file.close()
+            print("Finished sending", fileName)
+
         else:
-            distributeMsg(msg)
+            distributeMsg(msg.encode('ascii'))
+            print(msg)
 
 
 #Sends the message to each user in chat room
 def distributeMsg(msg):
     for user in users:
         user.send(msg)
-    print(msg.decode('ascii'))
+    
 
 def receiveUsers():
     print("Started!")
