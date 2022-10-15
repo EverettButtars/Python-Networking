@@ -6,7 +6,7 @@ I created this to better understand and test my knowledge of networking, using s
 
 (you will need to show two pieces of software running and communicating with each other) and a walkthrough of the code.}
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/tYOK58aRaoE)
 
 # Network Communication
 
@@ -27,6 +27,6 @@ I used Python and it's socket library, it simplified a lot of the programming. I
 
 # Future Work
 
-* Item 1
-* Item 2
-* Item 3
+* Provide more error checking on both ends
+* Remove client's own chats from log, other the that he entered
+* Send files to specific people, rather then to whole chatroom
